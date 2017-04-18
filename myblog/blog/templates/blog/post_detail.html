@@ -1,0 +1,32 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    <div class="post">
+        {% if post.published_date %}
+            <div class="date">
+                {{ post.published_date }}
+            </div>
+        {% endif %}
+        <div class="col-sm-8 col-sm-offset-2">
+            {% if post.image %}
+                <img src="{{post.image.url}}" height="100" width="50">
+            {% endif %}
+        </div>
+        {% if user.is_authenticated %}
+            <a class="btn btn-default" href="{% url 'blog:post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+        {% endif %}
+        <h1>{{ post.title }}</h1>
+        <p>{{ post.text|linebreaksbr }}</p>
+                        {% if request.user.is_authenticated %}
+                            <button  data-like-id="{{ lt.id }}" class="btn btn-primary glyphicon glyphicon-thumbs-up likes" type="button">
+                            Like {% if lt.likes > 0 %} {{lt.likes}} {% endif %}
+                            </button>     
+                            <button id="dislike{{ lt.id }}" data-dislike-id="{{ lt.id }}" class="btn btn-primary glyphicon glyphicon-thumbs-down dislikes" type="button">
+                            DisLikes {% if lt.dislikes > 0 %} {{lt.dislikes}} {% endif %}
+                            </button>  
+                        {% endif %}  
+        
+        
+
+    </div>
+{% endblock %}
